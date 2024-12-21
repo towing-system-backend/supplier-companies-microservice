@@ -25,7 +25,6 @@ namespace Application.Core
 
         public MethodInfo? GetEventHandler(string eventHandler)
         {
-            Console.WriteLine($"Este es el event handler {eventHandler}");
             MethodInfo? method = GetType().GetMethod($"On{eventHandler}", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             return method;
         }

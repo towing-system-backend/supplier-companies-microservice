@@ -11,6 +11,8 @@ namespace SupplierCompany.Application
         private readonly ISupplierCompanyRepository _supplierCompanyRepository = supplierCompanyRepository;
         async public Task<Result<RegisterSupplierCompanyResponse>> Execute(RegisterSupplierCompanyCommand command)
         {
+            var rifRegistered = await _supplierCompanyRepository.FindByRif(command.Rif);
+            if (rifRegistered.HasValue()) return Result<RegisterSupplierCompanyResponse>.MakeError(new SupplierCompanyRegisteredError(command.Rif));
 
             var departments = command.Departments.Select(d =>
                 new Domain.Department(
@@ -50,7 +52,7 @@ namespace SupplierCompany.Application
             var events = supplierCompany.PullEvents();
             await _supplierCompanyRepository.Save(supplierCompany);
             await _eventStore.AppendEvents(events);
-            //await _messageBrokerService.Publish(events);
+            await _messageBrokerService.Publish(events);
 
             return Result<RegisterSupplierCompanyResponse>.MakeSuccess(new RegisterSupplierCompanyResponse(supplierCompanyId));
         }

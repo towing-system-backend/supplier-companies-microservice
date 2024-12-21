@@ -47,5 +47,6 @@ namespace SupplierCompany.Infrastructure
         public string State = state;
         public string City = city;
         public string Street = street;
+        public DateTime CreatedAt = DateTime.Now;
     }
 }
