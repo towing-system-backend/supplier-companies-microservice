@@ -12,7 +12,7 @@ namespace Application.Core
             var result = await _service.Execute(data);
             sw.Stop();
             _logger.Log($"Execution time: {sw.ElapsedMilliseconds}ms");
-            if(result.IsSuccess)
+            if (result.IsSuccess)
                 Task.Run(() => _performanceLogsRepository.LogStats(action, sw.ElapsedMilliseconds));
 
             return result;

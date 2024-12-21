@@ -1,5 +1,7 @@
-namespace Application.Core {
-    public interface IdService<T> {
+namespace Application.Core
+{
+    public interface IdService<T>
+    {
         T GenerateId();
     }
 }
