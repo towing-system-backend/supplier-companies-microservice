@@ -9,7 +9,7 @@ namespace Application.Core
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
         public async Task Publish(List<DomainEvent> domainEvents)
         {
-            foreach(var @event in domainEvents)
+            foreach (var @event in domainEvents)
             {
                 var eventType = new EventType(
                     @event.PublisherId,
@@ -17,8 +17,8 @@ namespace Application.Core
                     JsonConvert.SerializeObject(@event.Context),
                     @event.OcurredDate
                 );
-                await _publishEndpoint.Publish(eventType); 
+                await _publishEndpoint.Publish(eventType);
             }
         }
     }
-} 
+}

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,6 +8,13 @@
     <UserSecretsId>5c861212-4005-4fbf-8d60-16bb40c5720e</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Src\Infrastructure\Repositories\NewFolder\**" />
+    <Content Remove="Src\Infrastructure\Repositories\NewFolder\**" />
+    <EmbeddedResource Remove="Src\Infrastructure\Repositories\NewFolder\**" />
+    <None Remove="Src\Infrastructure\Repositories\NewFolder\**" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="DotNetEnv" Version="3.1.1" />
@@ -22,6 +29,10 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Src\Application\Errors\" />
 	</ItemGroup>
 
 </Project>

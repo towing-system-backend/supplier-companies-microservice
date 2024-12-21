@@ -4,7 +4,7 @@ namespace Application.Core
     {
         public string GenerateId()
         {
-             return Guid.NewGuid().ToString();
+            return Guid.NewGuid().ToString();
         }
     }
 }
