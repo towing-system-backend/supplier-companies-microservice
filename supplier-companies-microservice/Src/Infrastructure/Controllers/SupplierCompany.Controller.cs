@@ -36,8 +36,8 @@ namespace SupplierCompany.Infrastructure
                new ExceptionCatcher<RegisterSupplierCompanyCommand, RegisterSupplierCompanyResponse>(
                    new PerfomanceMonitor<RegisterSupplierCompanyCommand, RegisterSupplierCompanyResponse>(
                        new LoggingAspect<RegisterSupplierCompanyCommand, RegisterSupplierCompanyResponse>(
-                           new RegisterSupplierCompanyCommandHandler(_idService, _messageBrokerService, _eventStore, _supplierCompanyRepository), logger
-                       ), _logger, _performanceLogsRepository, "RegisterSupplierCompanyCommandHandler"
+                           new RegisterSupplierCompanyCommandHandler(_idService, _messageBrokerService, _eventStore, _supplierCompanyRepository), _logger
+                       ), _logger, _performanceLogsRepository, "RegisterSupplierCompanyCommandHandler", "Write"
                    ), ExceptionParser.Parse
                );
             var res = await handler.Execute(command);

@@ -59,6 +59,51 @@ namespace SupplierCompany.Infrastructure
             );
         }
 
+        public async Task<IOptional> FindByRif(string supplierCompanyRif)
+        {
+            var filter = Builders<MongoSupplierCompany>.Filter.Eq(supplierCompany => supplierCompany.Rif, supplierCompanyRif);
+            var res = await _supplierCompanyCollection.Find(filter).FirstOrDefaultAsync();
+
+            if (res == null) return IOptional.Empty();
+
+            var departments = res.Departments.Select(d =>
+                new Department(
+                    new DepartmentId(d.DepartmentId),
+                    new DepartmentName(d.Name),
+                    d.Employees.Select(e => new UserId(e)).ToList()
+                )
+            ).ToList();
+
+            var policies = res.Policies.Select(p =>
+                new Policy(
+                    new PolicyId(p.PolicyId),
+                    new PolicyTitle(p.Title),
+                    new PolicyCoverageAmount(p.CoverageAmount),
+                    new PolicyPrice(p.Price),
+                    new PolicyType(p.Type),
+                    new PolicyIssuanceDate(p.IssuanceDate),
+                    new PolicyExpirationDate(p.ExpirationDate)
+                )
+            ).ToList();
+
+            var towDrivers = res.TowDrivers.Select(t => new TowDriverId(t)).ToList();
+
+            return IOptional.Of(
+                Domain.SupplierCompany.Create(
+                    new SupplierCompanyId(res.SupplierCompanyId),
+                    departments,
+                    policies,
+                    towDrivers,
+                    new SupplierCompanyName(res.Name),
+                    new SupplierCompanyPhoneNumber(res.PhoneNumber),
+                    new SupplierCompanyType(res.Type),
+                    new SupplierCompanyRif(res.Rif),
+                    new SupplierCompanyAddress(res.State, res.City, res.Street),
+                    true
+                )
+            );
+        }
+
         public async Task Save(Domain.SupplierCompany supplierCompany)
         {
             var filter = Builders<MongoSupplierCompany>.Filter.Eq(supplierCompany => supplierCompany.SupplierCompanyId, supplierCompany.GetSupplierCompanyId().GetValue());
@@ -82,7 +127,8 @@ namespace SupplierCompany.Infrastructure
                 .Set(supplierCompany => supplierCompany.Rif, supplierCompany.GetRif().GetValue())
                 .Set(supplierCompany => supplierCompany.State, supplierCompany.GetAddress().GetState())
                 .Set(supplierCompany => supplierCompany.City, supplierCompany.GetAddress().GetCity())
-                .Set(supplierCompany => supplierCompany.Street, supplierCompany.GetAddress().GetStreet());
+                .Set(supplierCompany => supplierCompany.Street, supplierCompany.GetAddress().GetStreet())
+                .SetOnInsert(s => s.CreatedAt, DateTime.Now);
 
             await _supplierCompanyCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
         }

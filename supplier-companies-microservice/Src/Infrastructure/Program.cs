@@ -20,6 +20,9 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<GlobalExceptionFilter>();
 });
 
+var certSection = builder.Configuration.GetSection("Kestrel:Endpoints:Https:Certificate");
+certSection["Path"] = Environment.GetEnvironmentVariable("ASPNETCORE_Kestrel_CertificatesDefault_Path")!;
+certSection["Password"] = Environment.GetEnvironmentVariable("ASPNETCORE_Kestrel_CertificatesDefault_Password")!;
 
 builder.Services.AddSwaggerGen(c =>
 {

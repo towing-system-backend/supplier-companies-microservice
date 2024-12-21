@@ -2,7 +2,7 @@
 
 namespace SupplierCompany.Infrastructure
 {
-    public enum PolicyTypeDto
+    public enum SupplierCompanyTypeDto
     {
         Internal,
         External
@@ -28,7 +28,6 @@ namespace SupplierCompany.Infrastructure
         decimal Price,
         [Required]
         [StringLength(20, MinimumLength = 5)]
-        [EnumDataType(typeof(PolicyTypeDto))]
         string Type,
         [Required]
         DateTime IssuanceDate,
@@ -49,6 +48,7 @@ namespace SupplierCompany.Infrastructure
         [RegularExpression(@"^(0?4(14|24|16|26)\d{7})$", ErrorMessage = "Invalid phone number format")]
         string PhoneNumber,
         [Required]
+        [EnumDataType(typeof(SupplierCompanyTypeDto), ErrorMessage = "Type must be Internal or External")]
         string Type,
         [Required]
         [RegularExpression(@"^J-\d{8}-\d$", ErrorMessage = "Invalid RIF format")]

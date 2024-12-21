@@ -1,7 +1,7 @@
 namespace Application.Core
 {
     using System.Diagnostics;
-    public class PerfomanceMonitor<T, U>(IService<T, U> service, Logger logger, IPerformanceLogsRepository performanceLogsRepository, string action) : IService<T, U>
+    public class PerfomanceMonitor<T, U>(IService<T, U> service, Logger logger, IPerformanceLogsRepository performanceLogsRepository, string operation, string operationType) : IService<T, U>
     {
         private readonly IService<T, U> _service = service;
         private readonly Logger _logger = logger;
@@ -13,8 +13,8 @@ namespace Application.Core
             sw.Stop();
             _logger.Log($"Execution time: {sw.ElapsedMilliseconds}ms");
             if (result.IsSuccess)
-                Task.Run(() => _performanceLogsRepository.LogStats(action, sw.ElapsedMilliseconds));
-
+                Task.Run(() => _performanceLogsRepository.LogStats(operation, operationType, sw.ElapsedMilliseconds));
+          
             return result;
         }
     }
