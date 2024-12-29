@@ -17,7 +17,7 @@ namespace Application.Core
 
         public void Apply(DomainEvent @event)
         {
-            var eventHandler = GetEventHandler(@event.GetType().Name) ?? throw new Exception("Event handler not found.");
+            var eventHandler = GetEventHandler(@event.GetType().Name) ?? throw new Exception($"Event handler not found for event { @event}");
             eventHandler.Invoke(this, new object[] { @event.Context });
             ValidateState();
             Events.Add(@event);

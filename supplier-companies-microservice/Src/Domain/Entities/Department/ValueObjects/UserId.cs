@@ -10,7 +10,7 @@ namespace SupplierCompany.Domain
         {
             if (!GuidEx.IsGuid(value))
             {
-                throw new InvalidTowDriverIdException();
+                throw new InvalidUserIdException();
             }
 
             _value = value;

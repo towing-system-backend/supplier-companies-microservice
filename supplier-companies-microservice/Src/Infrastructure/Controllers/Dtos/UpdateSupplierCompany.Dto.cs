@@ -2,7 +2,7 @@
 
 namespace SupplierCompany.Infrastructure
 {
-    public record CreateDepartment(
+    public record UpdateDepartment(
         [Required]
         [StringLength(20, MinimumLength = 5)]
         string Name,
@@ -10,7 +10,7 @@ namespace SupplierCompany.Infrastructure
         List<string> Employee
     );
 
-    public record CreatePolicy(
+    public record UpdatePolicy(
         [Required]
         [StringLength(20, MinimumLength = 5)]
         string Title,
@@ -28,34 +28,26 @@ namespace SupplierCompany.Infrastructure
         [Required]
         DateTime ExpirationDate
     );
-    
-    public record CreateSupplierCompanyDto(
+
+    public record UpdateSupplierCompanyDto(
+        List<UpdateDepartment>? Departments,
+        List<UpdatePolicy>? Policies,
+        List<string>? TowDrivers,
         [Required]
-        List<CreateDepartment> Departments,
-        [Required]
-        List<CreatePolicy> Policies,
-        [Required]
-        List<string> TowDrivers,
-        [Required]
+        string Id,
         [StringLength(20, MinimumLength = 5)]
-        string Name,
-        [Required]
+        string? Name,
         [RegularExpression(@"^(0?4(14|24|16|26)\d{7})$", ErrorMessage = "Invalid phone number format")]
-        string PhoneNumber,
-        [Required]
+        string? PhoneNumber,
         [RegularExpression(@"^(Internal|External)$", ErrorMessage = "Type must be 'Internal', or 'External'")]
-        string Type,
-        [Required]
+        string? Type,
         [RegularExpression(@"^J-\d{8}-\d$", ErrorMessage = "Invalid RIF format")]
-        string Rif,
-        [Required]
+        string? Rif,
         [StringLength(20, MinimumLength = 3)]
-        string State,
-        [Required]
+        string? State,
         [StringLength(20, MinimumLength = 3)]
-        string City,
-        [Required]
+        string? City,
         [StringLength(20, MinimumLength = 3)]
-        string Street
+        string? Street
     );
 }
