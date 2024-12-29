@@ -14,6 +14,11 @@ namespace SupplierCompany.Application
             var rifRegistered = await _supplierCompanyRepository.FindByRif(command.Rif);
             if (rifRegistered.HasValue()) return Result<RegisterSupplierCompanyResponse>.MakeError(new SupplierCompanyRegisteredError(command.Rif));
 
+            if (command.Departments.Any(d => d.Employees.Count == 0)) return Result<RegisterSupplierCompanyResponse>.MakeError(new DepartmentWithoutEmployeesError());
+            if (command.Departments.Any(d => d.Employees.Distinct().Count() != d.Employees.Count)) return Result<RegisterSupplierCompanyResponse>.MakeError(new DuplicateEmployeeError());
+            if (command.Policies.Any(p => p.ExpirationDate < p.IssuanceDate)) return Result<RegisterSupplierCompanyResponse>.MakeError(new InvalidPolicyExpirationDateError());
+            if (command.TowDrivers.Distinct().Count() != command.TowDrivers.Count) return Result<RegisterSupplierCompanyResponse>.MakeError(new DuplicateTowDriverError());
+                        
             var departments = command.Departments.Select(d =>
                 new Domain.Department(
                     new DepartmentId(_idService.GenerateId()),

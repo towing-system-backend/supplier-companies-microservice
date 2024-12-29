@@ -23,7 +23,12 @@ namespace SupplierCompany.Domain
         {
             if (Id == null ||
                 _departments.Count == 0 ||
+                _departments.Select(d => d.GetName().GetValue()).Distinct().Count() != _departments.Count ||
                 _policies.Count == 0 ||
+                _policies.Select(p => p.GetTitle().GetValue()).Distinct().Count() != _policies.Count ||
+                _towDrivers.Count == 0 ||
+                _policies.Select(p => p.GetTitle().GetValue()).Distinct().Count() != _policies.Count ||
+                _policies.Any(p => p.GetExpirationDate().GetValue() < p.GetIssuanceDate().GetValue()) ||
                 _name == null ||
                 _phoneNumber == null ||
                 _type == null ||
@@ -73,9 +78,50 @@ namespace SupplierCompany.Domain
             }
 
             var supplierCompany = new SupplierCompany(supplierCompanyId);
-            supplierCompany.Apply(SupplierCompanyCreated.CreateEvent(supplierCompanyId, departments, policies, towDrivers, name, phoneNumber, type, rif, address));
+            supplierCompany.Apply(SupplierCompanyCreated.CreateEvent(
+                    supplierCompanyId,
+                    departments,
+                    policies,
+                    towDrivers,
+                    name,
+                    phoneNumber,
+                    type,
+                    rif,
+                    address
+                )
+            );
 
             return supplierCompany;
+        }
+
+        public void RegisterDepartment(DepartmentId id, DepartmentName name, List<UserId> employees)
+        {
+            Apply(DepartmentRegistered.CreateEvent(Id, id, name, employees));
+        }
+
+        public void RegisterPolicy(PolicyId id, PolicyTitle title, PolicyCoverageAmount coverageAmount, PolicyPrice price, PolicyType type, PolicyIssuanceDate issuanceDate, PolicyExpirationDate expirationDate)
+        {
+            Apply(PolicyRegistered.CreateEvent(Id, id, title, coverageAmount, price, type, issuanceDate, expirationDate));
+        }
+
+        public void RegisterTowDriver(UserId id)
+        {
+            Apply(TowDriverRegistered.CreateEvent(Id, id));
+        }
+
+        public void UpdateSupplierCompanyDepartments(List<Department> departments)
+        {
+            Apply(SupplierCompanyDepartmentsUpdated.CreateEvent(Id, departments));
+        }
+
+        public void UpdateSupplierCompanyPolicies(List<Policy> policies)
+        {
+            Apply(SupplierCompanyPoliciesUpdated.CreateEvent(Id, policies));
+        }
+
+        public void UpdateSupplierCompanyTowDrivers(List<TowDriverId> towDrivers)
+        {
+            Apply(SupplierCompanyTowDriversUpdated.CreateEvent(Id, towDrivers));
         }
 
         public void UpdateSupplierCompanyName(SupplierCompanyName name)
@@ -102,24 +148,28 @@ namespace SupplierCompany.Domain
         {
             Apply(SupplierCompanyAddressUpdated.CreateEvent(Id, address));
         }
-
+       
         private void OnSupplierCompanyCreatedEvent(SupplierCompanyCreated context)
         {
-            _departments = context.Departments.Select(d => new Department(
-                new DepartmentId(d.Id),
-                new DepartmentName(d.Name),
-                d.Employees.Select(e => new UserId(e)).ToList()
-            )).ToList();
+            _departments = context.Departments.Select(d => 
+                new Department(
+                    new DepartmentId(d.Id),
+                    new DepartmentName(d.Name),
+                    d.Employees.Select(e => new UserId(e)).ToList()
+                )
+            ).ToList();
 
-            _policies = context.Policies.Select(p => new Policy(
-                new PolicyId(p.Id),
-                new PolicyTitle(p.Title),
-                new PolicyCoverageAmount(p.CoverageAmount),
-                new PolicyPrice(p.Price),
-                new PolicyType(p.Type),
-                new PolicyIssuanceDate(p.IssuanceDate),
-                new PolicyExpirationDate(p.ExpirationDate)
-            )).ToList();
+            _policies = context.Policies.Select(p => 
+                new Policy(
+                    new PolicyId(p.Id),
+                    new PolicyTitle(p.Title),
+                    new PolicyCoverageAmount(p.CoverageAmount),
+                    new PolicyPrice(p.Price),
+                    new PolicyType(p.Type),
+                    new PolicyIssuanceDate(p.IssuanceDate),
+                    new PolicyExpirationDate(p.ExpirationDate)
+                )
+            ).ToList();
 
             _towDrivers = context.TowDrivers.Select(t => new TowDriverId(t)).ToList();
             _name = new SupplierCompanyName(context.Name);
@@ -128,6 +178,68 @@ namespace SupplierCompany.Domain
             _rif = new SupplierCompanyRif(context.Rif);
             _address = new SupplierCompanyAddress(context.State, context.City, context.Street);
         }
+       
+        private void OnDepartmentRegisteredEvent(DepartmentRegistered context)
+        {
+            _departments.Add(
+                new Department(
+                    new DepartmentId(context.Id),
+                    new DepartmentName(context.Name),
+                    context.Employees.Select(e => new UserId(e)).ToList()
+                )
+            );
+        }
+
+        private void OnPolicyRegisteredEvent(PolicyRegistered context)
+        {
+            _policies.Add(
+                new Policy(
+                    new PolicyId(context.Id),
+                    new PolicyTitle(context.Title),
+                    new PolicyCoverageAmount(context.CoverageAmount),
+                    new PolicyPrice(context.Price),
+                    new PolicyType(context.Type),
+                    new PolicyIssuanceDate(context.IssuanceDate),
+                    new PolicyExpirationDate(context.ExpirationDate)
+                )
+            );
+        }
+
+        private void OnTowDriverRegisteredEvent(TowDriverRegistered context)
+        {
+            _towDrivers.Add(new TowDriverId(context.Id));
+        }
+
+        private void OnSupplierCompanyDepartmentsUpdatedEvent(SupplierCompanyDepartmentsUpdated context)
+        {
+            _departments = context.Departments.Select(d => 
+                new Department(
+                    new DepartmentId(d.Id),
+                    new DepartmentName(d.Name),
+                    d.Employees.Select(e => new UserId(e)).ToList()
+                )
+            ).ToList();
+        }
+
+        private void OnSupplierCompanyPoliciesUpdatedEvent(SupplierCompanyPoliciesUpdated context)
+        {
+            _policies = context.Policies.Select(p => 
+                new Policy(
+                    new PolicyId(p.Id),
+                    new PolicyTitle(p.Title),
+                    new PolicyCoverageAmount(p.CoverageAmount),
+                    new PolicyPrice(p.Price),
+                    new PolicyType(p.Type),
+                    new PolicyIssuanceDate(p.IssuanceDate),
+                    new PolicyExpirationDate(p.ExpirationDate)
+                )
+            ).ToList();
+        }
+
+        private void OnSupplierCompanyTowDriversUpdatedEvent(SupplierCompanyTowDriversUpdated context)
+        {
+            _towDrivers = context.TowDrivers.Select(t => new TowDriverId(t)).ToList();
+        }   
 
         private void OnSupplierCompanyNameUpdatedEvent(SupplierCompanyNameUpdated context)
         {
