@@ -14,7 +14,7 @@ namespace Application.Core
             _logger.Log($"Execution time: {sw.ElapsedMilliseconds}ms");
             if (result.IsSuccess)
                 Task.Run(() => _performanceLogsRepository.LogStats(operation, operationType, sw.ElapsedMilliseconds));
-
+          
             return result;
         }
     }
