@@ -183,7 +183,7 @@ namespace SupplierCompany.Domain
         {
             _departments.Add(
                 new Department(
-                    new DepartmentId(context.Id),
+                    new DepartmentId(context.DepartmentId),
                     new DepartmentName(context.Name),
                     context.Employees.Select(e => new UserId(e)).ToList()
                 )
@@ -194,7 +194,7 @@ namespace SupplierCompany.Domain
         {
             _policies.Add(
                 new Policy(
-                    new PolicyId(context.Id),
+                    new PolicyId(context.PolicyId),
                     new PolicyTitle(context.Title),
                     new PolicyCoverageAmount(context.CoverageAmount),
                     new PolicyPrice(context.Price),
@@ -207,7 +207,7 @@ namespace SupplierCompany.Domain
 
         private void OnTowDriverRegisteredEvent(TowDriverRegistered context)
         {
-            _towDrivers.Add(new TowDriverId(context.Id));
+            _towDrivers.Add(new TowDriverId(context.TowDriverId));
         }
 
         private void OnSupplierCompanyDepartmentsUpdatedEvent(SupplierCompanyDepartmentsUpdated context)

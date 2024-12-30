@@ -49,7 +49,7 @@ namespace SupplierCompany.Infrastructure
         public async Task<ObjectResult> UpdateSupplierCompany([FromBody] UpdateSupplierCompanyDto udpateSupplierCompanyDto)
         {
             var command = new UpdateSupplierCompanyCommand(
-                udpateSupplierCompanyDto.Id,
+                udpateSupplierCompanyDto.SupplierCompanyId,
                 udpateSupplierCompanyDto.Departments.Select(d => new Application.Department(d.Name, d.Employee)).ToList(),
                 udpateSupplierCompanyDto.Policies.Select(p => new Application.Policy(p.Title, p.CoverageAmount, p.Price, p.Type, p.IssuanceDate, p.ExpirationDate)).ToList(),
                 udpateSupplierCompanyDto.TowDrivers,
