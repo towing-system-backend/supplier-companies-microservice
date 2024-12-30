@@ -6,7 +6,7 @@ namespace SupplierCompany.Domain
 
     public class PolicyRegistered(string id, string title, int coverageAmount, decimal price, string type, DateTime issuanceDate, DateTime expirationDate)
     {
-        public readonly string Id = id;
+        public readonly string PolicyId = id;
         public readonly string Title = title;
         public readonly int CoverageAmount = coverageAmount;
         public readonly decimal Price = price;

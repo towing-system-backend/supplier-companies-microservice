@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Application.Core;
+using System.ComponentModel.DataAnnotations;
 
 namespace SupplierCompany.Infrastructure
 {
@@ -7,6 +8,7 @@ namespace SupplierCompany.Infrastructure
         [StringLength(20, MinimumLength = 5)]
         string Name,
         [Required]
+        [ValidateEachGuid(ErrorMessage = "Each tow driver ID must be a valid 'Guid'.")]
         List<string> Employee
     );
 
@@ -35,18 +37,19 @@ namespace SupplierCompany.Infrastructure
         [Required]
         List<CreatePolicy> Policies,
         [Required]
+        [ValidateEachGuid(ErrorMessage = "Each tow driver ID must be a valid 'Guid'.")]
         List<string> TowDrivers,
         [Required]
         [StringLength(20, MinimumLength = 5)]
         string Name,
         [Required]
-        [RegularExpression(@"^(0?4(14|24|16|26)\d{7})$", ErrorMessage = "Invalid phone number format")]
+        [RegularExpression(@"^(0?4(14|24|16|26)\d{7})$", ErrorMessage = "Invalid phone number format.")]
         string PhoneNumber,
         [Required]
-        [RegularExpression(@"^(Internal|External)$", ErrorMessage = "Type must be 'Internal', or 'External'")]
+        [RegularExpression(@"^(Internal|External)$", ErrorMessage = "Type must be 'Internal' or 'External'.")]
         string Type,
         [Required]
-        [RegularExpression(@"^J-\d{8}-\d$", ErrorMessage = "Invalid RIF format")]
+        [RegularExpression(@"^J-\d{8}-\d$", ErrorMessage = "Invalid RIF format.")]
         string Rif,
         [Required]
         [StringLength(20, MinimumLength = 3)]

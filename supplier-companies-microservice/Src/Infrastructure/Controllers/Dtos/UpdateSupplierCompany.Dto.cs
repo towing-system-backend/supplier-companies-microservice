@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Application.Core;
+using System.ComponentModel.DataAnnotations;
 
 namespace SupplierCompany.Infrastructure
 {
@@ -7,6 +8,7 @@ namespace SupplierCompany.Infrastructure
         [StringLength(20, MinimumLength = 5)]
         string Name,
         [Required]
+        [ValidateEachGuid(ErrorMessage = "Each employee ID must be a valid 'Guid'.")]
         List<string> Employee
     );
 
@@ -32,16 +34,18 @@ namespace SupplierCompany.Infrastructure
     public record UpdateSupplierCompanyDto(
         List<UpdateDepartment>? Departments,
         List<UpdatePolicy>? Policies,
+        [ValidateEachGuid(ErrorMessage = "Each tow driver ID must be a valid 'Guid'.")]
         List<string>? TowDrivers,
         [Required]
-        string Id,
+        [RegularExpression(@"^([0-9A-Fa-f]{8}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{12})$", ErrorMessage = "Id must be a 'Guid'.")]
+        string SupplierCompanyId,
         [StringLength(20, MinimumLength = 5)]
         string? Name,
-        [RegularExpression(@"^(0?4(14|24|16|26)\d{7})$", ErrorMessage = "Invalid phone number format")]
+        [RegularExpression(@"^(0?4(14|24|16|26)\d{7})$", ErrorMessage = "Invalid phone number format.")]
         string? PhoneNumber,
-        [RegularExpression(@"^(Internal|External)$", ErrorMessage = "Type must be 'Internal', or 'External'")]
+        [RegularExpression(@"^(Internal|External)$", ErrorMessage = "Type must be 'Internal' or 'External'.")]
         string? Type,
-        [RegularExpression(@"^J-\d{8}-\d$", ErrorMessage = "Invalid RIF format")]
+        [RegularExpression(@"^J-\d{8}-\d$", ErrorMessage = "Invalid RIF format.")]
         string? Rif,
         [StringLength(20, MinimumLength = 3)]
         string? State,

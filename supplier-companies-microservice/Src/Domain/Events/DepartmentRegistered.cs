@@ -6,7 +6,7 @@ namespace SupplierCompany.Domain
 
     public class DepartmentRegistered(string id, string name, List<string> employees)
     {
-        public readonly string Id = id;
+        public readonly string DepartmentId = id;
         public readonly string Name = name;
         public readonly List<string> Employees = employees;
 

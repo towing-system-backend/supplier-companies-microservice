@@ -6,7 +6,7 @@ namespace SupplierCompany.Domain
 
     public class TowDriverRegistered(string id)
     {
-        public readonly string Id = id;
+        public readonly string TowDriverId = id;
 
         public static TowDriverRegisteredEvent CreateEvent(SupplierCompanyId publisherId, UserId towDriverId)
         {
