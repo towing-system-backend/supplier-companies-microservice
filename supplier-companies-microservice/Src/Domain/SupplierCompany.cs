@@ -78,7 +78,8 @@ namespace SupplierCompany.Domain
             }
 
             var supplierCompany = new SupplierCompany(supplierCompanyId);
-            supplierCompany.Apply(SupplierCompanyCreated.CreateEvent(
+            supplierCompany.Apply(
+                SupplierCompanyCreated.CreateEvent(
                     supplierCompanyId,
                     departments,
                     policies,

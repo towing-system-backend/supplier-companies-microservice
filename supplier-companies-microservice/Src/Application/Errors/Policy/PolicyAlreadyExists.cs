@@ -4,6 +4,6 @@ namespace SupplierCompany.Application
 {
     public class PolicyAlreadyExistsError : ApplicationError
     {
-        public PolicyAlreadyExistsError(string policyId) : base($"Policy with rif {policyId} already exists.") { }
+        public PolicyAlreadyExistsError(string title) : base($"Policy with Title '{title}' already exists.") { }
     }
 }

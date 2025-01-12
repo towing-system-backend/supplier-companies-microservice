@@ -4,6 +4,6 @@ namespace SupplierCompany.Application
 {
     public class DepartmentAlreadyExistsError : ApplicationError
     {
-        public DepartmentAlreadyExistsError(string departmentName) : base($"Department with name {departmentName} already exists.") { }
+        public DepartmentAlreadyExistsError(string name) : base($"Department with name '{name}' already exists.") { }
     }
 }
