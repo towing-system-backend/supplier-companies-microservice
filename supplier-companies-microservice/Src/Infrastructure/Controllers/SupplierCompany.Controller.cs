@@ -1,4 +1,5 @@
 ﻿using Application.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SupplierCompany.Application;
 using SupplierCompany.Domain;
@@ -7,9 +8,16 @@ namespace SupplierCompany.Infrastructure
 {
     [ApiController]
     [Route("api/suppliercompany")]
-    public class SupplierCompanyController(IdService<string> idService, Logger logger, IMessageBrokerService messageBrokerService, IEventStore eventStore, ISupplierCompanyRepository supplierCompanyRepository, IPerformanceLogsRepository performanceLogsRepository) : ControllerBase
+    public class SupplierCompanyController(
+        IdService<string> idService,
+        Logger logger,
+        IMessageBrokerService
+        messageBrokerService,
+        IEventStore eventStore,
+        ISupplierCompanyRepository supplierCompanyRepository,
+        IPerformanceLogsRepository performanceLogsRepository
+    ) : ControllerBase
     {
-
         private readonly IdService<string> _idService = idService;
         private readonly Logger _logger = logger;
         private readonly IMessageBrokerService _messageBrokerService = messageBrokerService;
@@ -18,6 +26,7 @@ namespace SupplierCompany.Infrastructure
         private readonly IPerformanceLogsRepository _performanceLogsRepository = performanceLogsRepository;
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         public async Task<ObjectResult> CreateSupplierCompany([FromBody] CreateSupplierCompanyDto createSupplierCompanyDto)
         {
             var command = new RegisterSupplierCompanyCommand(
@@ -46,6 +55,7 @@ namespace SupplierCompany.Infrastructure
         }
 
         [HttpPost("update")]
+        [Authorize(Roles = "Admin")]
         public async Task<ObjectResult> UpdateSupplierCompany([FromBody] UpdateSupplierCompanyDto udpateSupplierCompanyDto)
         {
             var command = new UpdateSupplierCompanyCommand(
@@ -75,6 +85,7 @@ namespace SupplierCompany.Infrastructure
         }
 
         [HttpPost("create/department")]
+        [Authorize(Roles = "Admin")]
         public async Task<ObjectResult> CreateDepartment([FromBody] CreateDepartmentDto createDepartmentDto)
         {
             var command = new RegisterDepartmentCommand(
@@ -96,6 +107,7 @@ namespace SupplierCompany.Infrastructure
         }
 
         [HttpPost("create/policy")]
+        [Authorize(Roles = "Admin")]
         public async Task<ObjectResult> CreatePolicy([FromBody] CreatePolicyDto createPolicyDto)
         {
             var command = new RegisterPolicyCommand(
@@ -121,6 +133,7 @@ namespace SupplierCompany.Infrastructure
         }
 
         [HttpPost("register/towdriver")]
+        [Authorize(Roles = "Admin")]
         public async Task<ObjectResult> RegisterTowDriver([FromBody] RegisterTowDriverDto registerTowDriverDto)
         {
             var command = new RegisterTowDriverCommand(

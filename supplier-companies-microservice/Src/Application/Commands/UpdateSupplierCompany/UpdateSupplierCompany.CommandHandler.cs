@@ -17,10 +17,10 @@ namespace SupplierCompany.Application
 
             var supplierCompany = supplierCompanyRegistered.Unwrap();
 
-
             if (command.Departments != null)
             {
-                if (command.Departments.Any(d => d.Employees.Distinct().Count() != d.Employees.Count)) return Result<UpdateSupplierCompanyResponse>.MakeError(new DuplicateEmployeeError());
+                if (command.Departments.Any(d => d.Employees.Distinct().Count() != d.Employees.Count)) 
+                        return Result<UpdateSupplierCompanyResponse>.MakeError(new DuplicateEmployeeError());
                 
                 var departments = command.Departments.Select(d =>
                     new Domain.Department(
@@ -36,6 +36,7 @@ namespace SupplierCompany.Application
             if (command.Policies != null)
             {
                 if (command.Policies.Any(p => p.ExpirationDate < p.IssuanceDate)) return Result<UpdateSupplierCompanyResponse>.MakeError(new InvalidPolicyExpirationDateError());
+                
                 var policies = command.Policies.Select(p =>
                         new Domain.Policy(
                         new PolicyId(_idService.GenerateId()),
