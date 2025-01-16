@@ -9,6 +9,7 @@ namespace Application.Core
 
         public override bool IsValid(object value)
         {
+            if (value is null) return true;
             if (value is IEnumerable<string> guids)
             {
                 foreach (var guid in guids)

@@ -4,11 +4,21 @@ namespace SupplierCompany.Domain
 {
     public class PolicyRegisteredEvent(string publisherId, string type, PolicyRegistered context) : DomainEvent(publisherId, type, context) { }
 
-    public class PolicyRegistered(string id, string title, int coverageAmount, decimal price, string type, DateTime issuanceDate, DateTime expirationDate)
+    public class PolicyRegistered(
+        string id,
+        string title,
+        int coverageAmount,
+        int coverageDistance,
+        decimal price,
+        string type,
+        DateTime issuanceDate,
+        DateTime expirationDate
+    )
     {
         public readonly string PolicyId = id;
         public readonly string Title = title;
         public readonly int CoverageAmount = coverageAmount;
+        public readonly int CoverageDistance = coverageDistance;
         public readonly decimal Price = price;
         public readonly string Type = type;
         public readonly DateTime IssuanceDate = issuanceDate;
@@ -18,6 +28,7 @@ namespace SupplierCompany.Domain
             PolicyId policyId,
             PolicyTitle title,
             PolicyCoverageAmount coverageAmount,
+            PolicyCoverageDistance coverageDistance,
             PolicyPrice price,
             PolicyType type,
             PolicyIssuanceDate issuanceDate,
@@ -30,6 +41,7 @@ namespace SupplierCompany.Domain
                     policyId.GetValue(),
                     title.GetValue(),
                     coverageAmount.GetValue(),
+                    coverageDistance.GetValue(),
                     price.GetValue(),
                     type.GetValue(),
                     issuanceDate.GetValue(),
