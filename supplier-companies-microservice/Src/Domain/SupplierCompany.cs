@@ -100,9 +100,18 @@ namespace SupplierCompany.Domain
             Apply(DepartmentRegistered.CreateEvent(Id, id, name, employees));
         }
 
-        public void RegisterPolicy(PolicyId id, PolicyTitle title, PolicyCoverageAmount coverageAmount, PolicyPrice price, PolicyType type, PolicyIssuanceDate issuanceDate, PolicyExpirationDate expirationDate)
+        public void RegisterPolicy(
+            PolicyId id,
+            PolicyTitle title,
+            PolicyCoverageAmount coverageAmount,
+            PolicyCoverageDistance coverageDistance,
+            PolicyPrice price,
+            PolicyType type,
+            PolicyIssuanceDate issuanceDate,
+            PolicyExpirationDate expirationDate
+        )
         {
-            Apply(PolicyRegistered.CreateEvent(Id, id, title, coverageAmount, price, type, issuanceDate, expirationDate));
+            Apply(PolicyRegistered.CreateEvent(Id, id, title, coverageAmount, coverageDistance, price, type, issuanceDate, expirationDate));
         }
 
         public void RegisterTowDriver(UserId id)
@@ -165,6 +174,7 @@ namespace SupplierCompany.Domain
                     new PolicyId(p.Id),
                     new PolicyTitle(p.Title),
                     new PolicyCoverageAmount(p.CoverageAmount),
+                    new PolicyCoverageDistance(100),
                     new PolicyPrice(p.Price),
                     new PolicyType(p.Type),
                     new PolicyIssuanceDate(p.IssuanceDate),
@@ -198,6 +208,7 @@ namespace SupplierCompany.Domain
                     new PolicyId(context.PolicyId),
                     new PolicyTitle(context.Title),
                     new PolicyCoverageAmount(context.CoverageAmount),
+                    new PolicyCoverageDistance(context.CoverageDistance),
                     new PolicyPrice(context.Price),
                     new PolicyType(context.Type),
                     new PolicyIssuanceDate(context.IssuanceDate),
@@ -229,6 +240,7 @@ namespace SupplierCompany.Domain
                     new PolicyId(p.Id),
                     new PolicyTitle(p.Title),
                     new PolicyCoverageAmount(p.CoverageAmount),
+                    new PolicyCoverageDistance(p.CoverageDistance),
                     new PolicyPrice(p.Price),
                     new PolicyType(p.Type),
                     new PolicyIssuanceDate(p.IssuanceDate),

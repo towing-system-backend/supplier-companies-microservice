@@ -2,7 +2,11 @@
 
 namespace SupplierCompany.Infrastructure
 {
-    public class MongoDepartment(string departmentId, string name, List<string> employees)
+    public class MongoDepartment(
+        string departmentId,
+        string name,
+        List<string> employees
+    )
     {
         [BsonId]
         public string DepartmentId = departmentId;
@@ -10,12 +14,22 @@ namespace SupplierCompany.Infrastructure
         public List<string> Employees = employees;
     }
 
-    public class MongoPolicy(string policyId, string title, int coverageAmount, decimal price, string type, DateTime issuanceDate, DateTime expirationDate)
+    public class MongoPolicy(
+        string policyId,
+        string title,
+        int coverageAmount,
+        int coverageDistance,
+        decimal price,
+        string type,
+        DateTime issuanceDate,
+        DateTime expirationDate
+    )
     {
         [BsonId]
         public string PolicyId = policyId;
         public string Title = title;
         public int CoverageAmount = coverageAmount;
+        public int CoverageDistance = coverageDistance;
         public decimal Price = price;
         public string Type = type;
         public DateTime IssuanceDate = issuanceDate;

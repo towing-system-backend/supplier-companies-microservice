@@ -2,7 +2,7 @@
 
 namespace SupplierCompany.Domain
 {
-    public record PolicyListType(string Id, string Title, int CoverageAmount, decimal Price, string Type, DateTime IssuanceDate, DateTime ExpirationDate);
+    public record PolicyListType(string Id, string Title, int CoverageAmount, int CoverageDistance, decimal Price, string Type, DateTime IssuanceDate, DateTime ExpirationDate);
     public class SupplierCompanyPoliciesUpdatedEvent(string publisherId, string type, SupplierCompanyPoliciesUpdated context) : DomainEvent(publisherId, type, context) { }
 
     public class SupplierCompanyPoliciesUpdated(List<PolicyListType> policies)
@@ -19,6 +19,7 @@ namespace SupplierCompany.Domain
                             p.GetId().GetValue(),
                             p.GetTitle().GetValue(),
                             p.GetCoverageAmount().GetValue(),
+                            p.GetCoverageDistance().GetValue(),
                             p.GetPrice().GetValue(),
                             p.GetType().GetValue(),
                             p.GetIssuanceDate().GetValue(),

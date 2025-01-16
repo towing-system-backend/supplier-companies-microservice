@@ -35,12 +35,10 @@ namespace SupplierCompany.Test
             var command = new UpdateSupplierCompanyCommand(
                 "0ed13c45-93cf-4ef6-ba11-b386bb36bd1b",
                 [
-                    new Application.Department("Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "6426e7b8-3e17-4f0c-8273-01c7cc56ecdf"]),
-                    new Application.Department("Recursos Humanos", ["2b330a42-28e0-49af-ba11-95f309c6115e", "69e70177-4362-44e1-b8d7-19dfe89ce356"])
+                    new DepartmentUpdate("e1d33be1-1c00-4dd8-beb4-e8c0ab9aaa64", "Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "6426e7b8-3e17-4f0c-8273-01c7cc56ecdf"]),
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2)),
-                    new Application.Policy("Ambulancia", 200000, 10000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
+                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2)),
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -80,16 +78,16 @@ namespace SupplierCompany.Test
             var command = new UpdateSupplierCompanyCommand(
                 "0ed13c45-93cf-4ef6-ba11-b386bb36bd1b",
                 [
-                    new Application.Department("Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "5631e557-08ac-475b-bd5f-a6cccc9da98d"]),
-                    new Application.Department("Recursos Humanos", ["2b330a42-28e0-49af-ba11-95f309c6115e", "6426e7b8-3e17-4f0c-8273-01c7cc56ecdf"])
+                    new DepartmentUpdate("e1d33be1-1c00-4dd8-beb4-e8c0ab9aaa64", "Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "5631e557-08ac-475b-bd5f-a6cccc9da98d"]),
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2)),
-                    new Application.Policy("Ambulancia", 200000, 10000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
+                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2)),
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
                     "c3889b66-4281-44fd-b731-57d7906eb566",
+                    "a95d8b6f-5331-4aee-990a-b943dbb81ed1",
+                    "f4b5d5b9-6476-4799-a580-60eb5ab07891"
                 ],
                 "Gruas La Guaira",
                 "04146522148",
@@ -111,6 +109,7 @@ namespace SupplierCompany.Test
                         new PolicyId("b68422ba-ebd0-45ea-9709-a53c64593d10"),
                         new PolicyTitle("Accidente vial"),
                         new PolicyCoverageAmount(100000),
+                        new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
                         new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
@@ -149,16 +148,16 @@ namespace SupplierCompany.Test
             var command = new UpdateSupplierCompanyCommand(
                 "0ed13c45-93cf-4ef6-ba11-b386bb36bd1b",
                 [
-                    new Application.Department("Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "6426e7b8-3e17-4f0c-8273-01c7cc56ecdf"]),
-                    new Application.Department("Recursos Humanos", ["2b330a42-28e0-49af-ba11-95f309c6115e", "69e70177-4362-44e1-b8d7-19dfe89ce356"])
+                    new DepartmentUpdate("e1d33be1-1c00-4dd8-beb4-e8c0ab9aaa64", "Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "6426e7b8-3e17-4f0c-8273-01c7cc56ecdf"]),
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 5000, "Especial", DateTime.Now.AddDays(2), DateTime.Now.AddDays(1)),
-                    new Application.Policy("Ambulancia", 200000, 10000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
+                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(2), DateTime.Now.AddDays(1)),
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
-                    "c3889b66-4281-44fd-b731-57d7906eb566"
+                    "c3889b66-4281-44fd-b731-57d7906eb566",
+                    "a95d8b6f-5331-4aee-990a-b943dbb81ed1",
+                    "f4b5d5b9-6476-4799-a580-60eb5ab07891"
                 ],
                 "Gruas La Guaira",
                 "04146522148",
@@ -180,6 +179,7 @@ namespace SupplierCompany.Test
                         new PolicyId("b68422ba-ebd0-45ea-9709-a53c64593d10"),
                         new PolicyTitle("Accidente vial"),
                         new PolicyCoverageAmount(100000),
+                        new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
                         new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
@@ -224,17 +224,16 @@ namespace SupplierCompany.Test
             var command = new UpdateSupplierCompanyCommand(
                 "0ed13c45-93cf-4ef6-ba11-b386bb36bd1b",
                 [
-                    new Application.Department("Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "6426e7b8-3e17-4f0c-8273-01c7cc56ecdf"]),
-                    new Application.Department("Recursos Humanos", ["2b330a42-28e0-49af-ba11-95f309c6115e", "69e70177-4362-44e1-b8d7-19dfe89ce356"])
+                    new Application.DepartmentUpdate("e1d33be1-1c00-4dd8-beb4-e8c0ab9aaa64", "Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "6426e7b8-3e17-4f0c-8273-01c7cc56ecdf"]),
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2)),
-                    new Application.Policy("Ambulancia", 200000, 10000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
+                    new Application.PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2)),
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
                     "c3889b66-4281-44fd-b731-57d7906eb566",
-                    "c3889b66-4281-44fd-b731-57d7906eb566"
+                    "a95d8b6f-5331-4aee-990a-b943dbb81ed1",
+                    "f4b5d5b9-6476-4799-a580-60eb5ab07891"
                 ],
                 "Gruas La Guaira",
                 "04146522148",
@@ -256,6 +255,7 @@ namespace SupplierCompany.Test
                         new PolicyId("b68422ba-ebd0-45ea-9709-a53c64593d10"),
                         new PolicyTitle("Accidente vial"),
                         new PolicyCoverageAmount(100000),
+                        new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
                         new PolicyIssuanceDate(DateTime.Now.AddDays(1)),

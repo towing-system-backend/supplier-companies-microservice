@@ -8,8 +8,10 @@ namespace SupplierCompany.Infrastructure
         string SupplierCompanyId,
         [Required]
         string Title,
-        [Required]
+        [Required][Range(1, int.MaxValue)]
         int CoverageAmount,
+        [Required][Range(1, int.MaxValue)]
+        int CoverageDistance,
         [Required]
         decimal Price,
         [Required]

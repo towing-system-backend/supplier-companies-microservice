@@ -19,18 +19,27 @@ namespace SupplierCompany.Application
 
             if (command.Departments != null)
             {
-                if (command.Departments.Any(d => d.Employees.Distinct().Count() != d.Employees.Count)) 
-                        return Result<UpdateSupplierCompanyResponse>.MakeError(new DuplicateEmployeeError());
-                
-                var departments = command.Departments.Select(d =>
-                    new Domain.Department(
-                            new DepartmentId(_idService.GenerateId()),
-                            new DepartmentName(d.Name),
-                            d.Employees.Select(e => new UserId(e)).ToList()
-                        )
-                    ).ToList();
+                foreach (var department in command.Departments)
+                {
+                    var existingDepartment = supplierCompany.GetDepartments().First(d => d.GetId().GetValue() == department.Id);
+                    
+                    if (!string.IsNullOrEmpty(department.Name))
+                    {
+                        existingDepartment.SetName(new DepartmentName(department.Name));
+                    }
 
-                supplierCompany.UpdateSupplierCompanyDepartments(departments);
+                    if (department.Employees != null)
+                    {
+                        if (department.Employees.Distinct().Count() != department.Employees.Count())
+                        {
+                            return Result<UpdateSupplierCompanyResponse>.MakeError(new DuplicateEmployeeError());
+                        }
+
+                        existingDepartment.SetEmployees(department.Employees.Select(e => new UserId(e)).ToList());
+                    }
+                }
+
+                supplierCompany.UpdateSupplierCompanyDepartments(supplierCompany.GetDepartments());
             }
 
             if (command.Policies != null)
@@ -42,6 +51,7 @@ namespace SupplierCompany.Application
                         new PolicyId(_idService.GenerateId()),
                         new PolicyTitle(p.Title),
                         new PolicyCoverageAmount(p.CoverageAmount),
+                        new PolicyCoverageDistance(p.CoverageDistance),
                         new PolicyPrice(p.Price),
                         new PolicyType(p.Type),
                         new PolicyIssuanceDate(p.IssuanceDate),

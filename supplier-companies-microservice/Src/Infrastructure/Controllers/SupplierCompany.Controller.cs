@@ -1,8 +1,10 @@
 ﻿using Application.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using SupplierCompany.Application;
 using SupplierCompany.Domain;
+using SupplierCompany.Query;
 
 namespace SupplierCompany.Infrastructure
 {
@@ -30,8 +32,8 @@ namespace SupplierCompany.Infrastructure
         public async Task<ObjectResult> CreateSupplierCompany([FromBody] CreateSupplierCompanyDto createSupplierCompanyDto)
         {
             var command = new RegisterSupplierCompanyCommand(
-                createSupplierCompanyDto.Departments.Select(d => new Application.Department(d.Name, d.Employee)).ToList(),
-                createSupplierCompanyDto.Policies.Select(p => new Application.Policy(p.Title, p.CoverageAmount, p.Price, p.Type, p.IssuanceDate, p.ExpirationDate)).ToList(),
+                createSupplierCompanyDto.Departments.Select(d => new Application.Department(d.Name)).ToList(),
+                createSupplierCompanyDto.Policies.Select(p => new Application.Policy(p.Title, p.CoverageAmount, p.CoverageDistance, p.Price, p.Type, p.IssuanceDate, p.ExpirationDate)).ToList(),
                 createSupplierCompanyDto.TowDrivers,
                 createSupplierCompanyDto.Name,
                 createSupplierCompanyDto.PhoneNumber,
@@ -56,20 +58,43 @@ namespace SupplierCompany.Infrastructure
 
         [HttpPost("update")]
         [Authorize(Roles = "Admin")]
-        public async Task<ObjectResult> UpdateSupplierCompany([FromBody] UpdateSupplierCompanyDto udpateSupplierCompanyDto)
+        public async Task<ObjectResult> UpdateSupplierCompany([FromBody] UpdateSupplierCompanyDto updateSupplierCompanyDto)
         {
+            var departments = new List<DepartmentUpdate>();
+            var policies = new List<PolicyUpdate>();
+
+            if(updateSupplierCompanyDto.Departments != null)
+            {
+                departments = updateSupplierCompanyDto.Departments.Select(d => new DepartmentUpdate(d.DepartmentId, d.Name, d.Employees)).ToList();
+            }
+
+            if(updateSupplierCompanyDto.Policies != null)
+            {
+                policies = updateSupplierCompanyDto.Policies.Select(p => 
+                new PolicyUpdate(
+                    p.PolicyId,
+                    p.Title,
+                    p.CoverageAmount,
+                    p.CoverageDistance,
+                    p.Price,
+                    p.Type,
+                    p.IssuanceDate,
+                    p.ExpirationDate)
+                ).ToList();
+            }
+
             var command = new UpdateSupplierCompanyCommand(
-                udpateSupplierCompanyDto.SupplierCompanyId,
-                udpateSupplierCompanyDto.Departments.Select(d => new Application.Department(d.Name, d.Employee)).ToList(),
-                udpateSupplierCompanyDto.Policies.Select(p => new Application.Policy(p.Title, p.CoverageAmount, p.Price, p.Type, p.IssuanceDate, p.ExpirationDate)).ToList(),
-                udpateSupplierCompanyDto.TowDrivers,
-                udpateSupplierCompanyDto.Name,
-                udpateSupplierCompanyDto.PhoneNumber,
-                udpateSupplierCompanyDto.Type,
-                udpateSupplierCompanyDto.Rif,
-                udpateSupplierCompanyDto.State,
-                udpateSupplierCompanyDto.City,
-                udpateSupplierCompanyDto.Street
+                updateSupplierCompanyDto.SupplierCompanyId,
+                departments.IsNullOrEmpty() ? null : departments,
+                policies.IsNullOrEmpty()? null : policies,
+                updateSupplierCompanyDto.TowDrivers,
+                updateSupplierCompanyDto.Name,
+                updateSupplierCompanyDto.PhoneNumber,
+                updateSupplierCompanyDto.Type,
+                updateSupplierCompanyDto.Rif,
+                updateSupplierCompanyDto.State,
+                updateSupplierCompanyDto.City,
+                updateSupplierCompanyDto.Street
             );
             var handler =
                new ExceptionCatcher<UpdateSupplierCompanyCommand, UpdateSupplierCompanyResponse>(
@@ -114,6 +139,7 @@ namespace SupplierCompany.Infrastructure
                 createPolicyDto.SupplierCompanyId,
                 createPolicyDto.Title,
                 createPolicyDto.CoverageAmount,
+                createPolicyDto.CoverageDistance,
                 createPolicyDto.Price,
                 createPolicyDto.Type,
                 createPolicyDto.IssuanceDate,
@@ -152,5 +178,14 @@ namespace SupplierCompany.Infrastructure
 
             return Ok(res.Unwrap());
         }
+
+        [HttpGet("find/all")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ObjectResult> GetAllSupplierCompanies()
+        {
+            var query = new GetAllSupplierCompanies();
+            var res = await query.Execute();
+            return Ok(res.Unwrap());
+        }   
     }
 }

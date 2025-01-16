@@ -34,10 +34,10 @@ namespace SupplierCompany.Tests
             // Arrange
             var command = new RegisterSupplierCompanyCommand(
                 [
-                    new Application.Department("Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "2b330a42-28e0-49af-ba11-95f309c6115e" ])
+                    new Application.Department("Contabilidad")
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
+                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -63,6 +63,7 @@ namespace SupplierCompany.Tests
                         new PolicyId("b68422ba-ebd0-45ea-9709-a53c64593d10"),
                         new PolicyTitle("Accidente vial"),
                         new PolicyCoverageAmount(100000),
+                        new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
                         new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
@@ -95,96 +96,15 @@ namespace SupplierCompany.Tests
         }
 
         [Fact]
-        public async Task Should_Not_Register_Company_When_Department_Has_No_Employees()
-        {
-            // Arrange
-            var command = new RegisterSupplierCompanyCommand(
-                [
-                    new Application.Department("Contabilidad", [])
-                ],
-                [
-                    new Application.Policy("Paramedicos", 100000, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
-                ],
-                [
-                    "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
-                    "c3889b66-4281-44fd-b731-57d7906eb566"
-                ],
-                "Gruas Caracas",
-                "04145241547",
-                "External",
-                "J-87654321-9",
-                "Distrito Capital",
-                "Caracas",
-                "Calle Paris"
-            );
-
-            _supplierCompanyRepositoryMock.Setup(repo => repo.FindByRif(command.Rif))
-                .ReturnsAsync(Optional<Domain.SupplierCompany>.Empty());
-
-            // Act
-            var result = await _registerSupplierCompanyCommandHandler.Execute(command);
-
-            // Assert
-            Assert.True(result.IsError);
-            var exception = Assert.Throws<DepartmentWithoutEmployeesError>(() => result.Unwrap());
-            Assert.Equal("Departments must have at least one employee.", exception.Message);
-
-            _supplierCompanyRepositoryMock.Verify(repo => repo.Save(It.IsAny<Domain.SupplierCompany>()), Times.Never);
-            _eventStoreMock.Verify(store => store.AppendEvents(It.IsAny<List<DomainEvent>>()), Times.Never);
-            _messageBrokerServiceMock.Verify(service => service.Publish(It.IsAny<List<DomainEvent>>()), Times.Never);
-        }
-
-        [Fact]
-        public async Task Should_Not_Register_Company_When_Employees_Are_Duplicated_In_Some_Department()
-        {
-            // Arrange
-            var command = new RegisterSupplierCompanyCommand(
-                [
-                    new Application.Department("Tecnologia", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "5631e557-08ac-475b-bd5f-a6cccc9da98d"]),
-                    new Application.Department("Contabilidad", ["327b9bdd-abe8-446e-8211-928100224601", "89dc83f1-e783-41d0-b7ae-95838e38964c"])
-                ],
-                [
-                    new Application.Policy("Policy1", 100000, 5000, "Type", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
-                ],
-                [
-                    "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
-                    "c3889b66-4281-44fd-b731-57d7906eb566"
-                ],
-                "Gruas Caracas",
-                "04145241547",
-                "External",
-                "J-87654321-9",
-                "Distrito Capital",
-                "Caracas",
-                "Calle Paris"
-            );
-
-            _supplierCompanyRepositoryMock.Setup(repo => repo.FindByRif(command.Rif))
-                .ReturnsAsync(Optional<Domain.SupplierCompany>.Empty());
-
-            // Act
-            var result = await _registerSupplierCompanyCommandHandler.Execute(command);
-
-            // Assert
-            Assert.True(result.IsError);
-            var exception = Assert.Throws<DuplicateEmployeeError>(() => result.Unwrap());
-            Assert.Equal("Some department has a duplicate employee.", exception.Message);
-
-            _supplierCompanyRepositoryMock.Verify(repo => repo.Save(It.IsAny<Domain.SupplierCompany>()), Times.Never);
-            _eventStoreMock.Verify(store => store.AppendEvents(It.IsAny<List<DomainEvent>>()), Times.Never);
-            _messageBrokerServiceMock.Verify(service => service.Publish(It.IsAny<List<DomainEvent>>()), Times.Never);
-        }
-
-        [Fact]
         public async Task Should_Not_Register_Company_When_Policy_Has_Invalid_Expiration_Date()
         {
             // Arrange
             var command = new RegisterSupplierCompanyCommand(
                 [
-                    new Application.Department("Contabilidad", ["327b9bdd-abe8-446e-8211-928100224601", "89dc83f1-e783-41d0-b7ae-95838e38964c"])
+                    new Application.Department("Contabilidad")
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 5000, "Especial", DateTime.Now.AddDays(2), DateTime.Now.AddDays(1))
+                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(2), DateTime.Now.AddDays(1))
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -221,10 +141,10 @@ namespace SupplierCompany.Tests
             // Arrange
             var command = new RegisterSupplierCompanyCommand(
                 [
-                    new Application.Department("Contabilidad", ["327b9bdd-abe8-446e-8211-928100224601", "89dc83f1-e783-41d0-b7ae-95838e38964c"])
+                    new Application.Department("Contabilidad")
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
+                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -262,10 +182,10 @@ namespace SupplierCompany.Tests
             // Arrange
             var command = new RegisterSupplierCompanyCommand(
                 [
-                    new Application.Department("Contabilidad", ["327b9bdd-abe8-446e-8211-928100224601", "89dc83f1-e783-41d0-b7ae-95838e38964c"])
+                    new Application.Department("Contabilidad")
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
+                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",

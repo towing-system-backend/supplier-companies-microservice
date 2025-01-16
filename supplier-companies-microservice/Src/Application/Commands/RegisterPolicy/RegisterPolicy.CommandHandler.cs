@@ -28,6 +28,7 @@ namespace SupplierCompany.Application
                     new PolicyId(policyId),
                     new PolicyTitle(command.Title),
                     new PolicyCoverageAmount(command.CoverageAmount),
+                    new PolicyCoverageDistance(command.CoverageDistance),
                     new PolicyPrice(command.Price),
                     new PolicyType(command.Type),
                     new PolicyIssuanceDate(command.IssuanceDate),

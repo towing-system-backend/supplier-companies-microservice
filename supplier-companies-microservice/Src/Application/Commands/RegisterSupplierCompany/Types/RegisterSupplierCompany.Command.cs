@@ -1,7 +1,16 @@
 ﻿namespace SupplierCompany.Application
 {
-    public record Department(string Name, List<string> Employees);
-    public record Policy(string Title, int CoverageAmount, decimal Price, string Type, DateTime IssuanceDate, DateTime ExpirationDate);
+    public record Department(string Name);
+    public record Policy(
+        string Title,
+        int CoverageAmount,
+        int CoverageDistance,
+        decimal Price,
+        string Type,
+        DateTime IssuanceDate,
+        DateTime ExpirationDate
+    );
+
     public record RegisterSupplierCompanyCommand(
         List<Department> Departments,
         List<Policy> Policies,
