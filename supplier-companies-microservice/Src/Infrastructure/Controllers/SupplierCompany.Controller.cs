@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SupplierCompany.Application;
 using SupplierCompany.Domain;
-using SupplierCompany.Query;
 
 namespace SupplierCompany.Infrastructure
 {
@@ -56,7 +55,7 @@ namespace SupplierCompany.Infrastructure
             return Ok(res.Unwrap());
         }
 
-        [HttpPost("update")]
+        [HttpPatch("update")]
         [Authorize(Roles = "Admin")]
         public async Task<ObjectResult> UpdateSupplierCompany([FromBody] UpdateSupplierCompanyDto updateSupplierCompanyDto)
         {
@@ -146,13 +145,14 @@ namespace SupplierCompany.Infrastructure
                 createPolicyDto.ExpirationDate
             );
 
-            var handler = new ExceptionCatcher<RegisterPolicyCommand, RegisterPolicyResponse>(
-                new PerfomanceMonitor<RegisterPolicyCommand, RegisterPolicyResponse>(
-                    new LoggingAspect<RegisterPolicyCommand, RegisterPolicyResponse>(
-                        new RegisterPolicyCommandHandler(_idService, _messageBrokerService, _eventStore, _supplierCompanyRepository), _logger
-                    ), _logger, _performanceLogsRepository, nameof(RegisterPolicyCommandHandler), "Write"
-                ), ExceptionParser.Parse
-            );
+            var handler = 
+                new ExceptionCatcher<RegisterPolicyCommand, RegisterPolicyResponse>(
+                    new PerfomanceMonitor<RegisterPolicyCommand, RegisterPolicyResponse>(
+                        new LoggingAspect<RegisterPolicyCommand, RegisterPolicyResponse>(
+                            new RegisterPolicyCommandHandler(_idService, _messageBrokerService, _eventStore, _supplierCompanyRepository), _logger
+                        ), _logger, _performanceLogsRepository, nameof(RegisterPolicyCommandHandler), "Write"
+                    ), ExceptionParser.Parse
+                );
             var res = await handler.Execute(command);
 
             return Ok(res.Unwrap());
@@ -167,25 +167,68 @@ namespace SupplierCompany.Infrastructure
                 registerTowDriverDto.Id
             );
 
-            var handler = new ExceptionCatcher<RegisterTowDriverCommand, RegisterTowDriverResponse>(
-                new PerfomanceMonitor<RegisterTowDriverCommand, RegisterTowDriverResponse>(
-                    new LoggingAspect<RegisterTowDriverCommand, RegisterTowDriverResponse>(
-                        new RegisterTowDriverCommandHandler(_messageBrokerService, _eventStore, _supplierCompanyRepository), _logger
-                    ), _logger, _performanceLogsRepository, nameof(RegisterTowDriverCommandHandler), "Write"
-                ), ExceptionParser.Parse
-            );
+            var handler = 
+                new ExceptionCatcher<RegisterTowDriverCommand, RegisterTowDriverResponse>(
+                    new PerfomanceMonitor<RegisterTowDriverCommand, RegisterTowDriverResponse>(
+                        new LoggingAspect<RegisterTowDriverCommand, RegisterTowDriverResponse>(
+                            new RegisterTowDriverCommandHandler(_messageBrokerService, _eventStore, _supplierCompanyRepository), _logger
+                        ), _logger, _performanceLogsRepository, nameof(RegisterTowDriverCommandHandler), "Write"
+                    ), ExceptionParser.Parse
+                );
             var res = await handler.Execute(command);
 
             return Ok(res.Unwrap());
         }
 
-        [HttpGet("find/all")]
+        [HttpGet("find/AllSupplierCompany")]
         [Authorize(Roles = "Admin")]
         public async Task<ObjectResult> GetAllSupplierCompanies()
         {
-            var query = new GetAllSupplierCompanies();
-            var res = await query.Execute();
+            var query =
+                new ExceptionCatcher<string, List<FindAllSupplierCompanyResponse>>(
+                    new PerfomanceMonitor<string, List<FindAllSupplierCompanyResponse>>(
+                        new LoggingAspect<string, List<FindAllSupplierCompanyResponse>>(
+                                new FindAllSupplierCompaniesQuery(), _logger
+                            ), _logger, _performanceLogsRepository, nameof(FindAllSupplierCompaniesQuery), "Read"
+                    ), ExceptionParser.Parse
+                );
+            var res = await query.Execute("");
+
             return Ok(res.Unwrap());
-        }   
+        }
+
+        [HttpGet("find/SupplierCompanyEmployees")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ObjectResult> GetSupplierCompanyEmployees([FromBody] string supplierCompanyId)
+        {
+            var query =
+                new ExceptionCatcher<string, List<FindSupplierCompanyEmployeesResponse>>(
+                    new PerfomanceMonitor<string, List<FindSupplierCompanyEmployeesResponse>>(
+                        new LoggingAspect<string, List<FindSupplierCompanyEmployeesResponse>>(
+                            new FindSupplierCompanyEmployeesQuery(), _logger
+                        ), _logger, _performanceLogsRepository, nameof(FindSupplierCompanyEmployeesQuery), "Read"
+                    ), ExceptionParser.Parse
+                );
+            var res = await query.Execute(supplierCompanyId);
+
+            return Ok(res.Unwrap());
+        }
+
+        [HttpGet("find/SupplierCompanyTowDrivers")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ObjectResult> GetSupplierCompanyTowDrivers([FromBody] string supplierCompanyId)
+        {
+            var query =
+                new ExceptionCatcher<string, List<FindSupplierCompanyTowDriversResponse>>(
+                    new PerfomanceMonitor<string, List<FindSupplierCompanyTowDriversResponse>>(
+                        new LoggingAspect<string, List<FindSupplierCompanyTowDriversResponse>>(
+                            new FindSupplierCompanyTowDriversQuery(), _logger
+                        ), _logger, _performanceLogsRepository, nameof(FindSupplierCompanyTowDriversQuery), "Read"
+                    ), ExceptionParser.Parse
+                );
+            var res = await query.Execute(supplierCompanyId);
+
+            return Ok(res.Unwrap());
+        }
     }
 }

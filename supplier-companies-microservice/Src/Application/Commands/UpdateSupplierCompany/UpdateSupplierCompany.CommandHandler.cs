@@ -30,7 +30,7 @@ namespace SupplierCompany.Application
 
                     if (department.Employees != null)
                     {
-                        if (department.Employees.Distinct().Count() != department.Employees.Count())
+                        if (department.Employees.Distinct().Count() != department.Employees.Count)
                         {
                             return Result<UpdateSupplierCompanyResponse>.MakeError(new DuplicateEmployeeError());
                         }
