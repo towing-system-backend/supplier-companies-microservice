@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Application.Core
 {
-    public class MongoEventStore : IEventStore 
+    public class MongoEventStore : IEventStore
     {
         private readonly IMongoCollection<MongoEvent> _eventCollection;
 
@@ -30,7 +30,7 @@ namespace Application.Core
                     e.OcurredDate
                 )
             );
-            
+
             await _eventCollection.InsertManyAsync(mappedEvents);
         }
     }

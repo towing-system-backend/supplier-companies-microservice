@@ -13,18 +13,19 @@ namespace Application.Core
             var events = Events;
             Events = [];
             return events;
-        } 
+        }
 
         public void Apply(DomainEvent @event)
         {
-            var eventHandler = GetEventHandler(@event.GetType().Name) ?? throw new Exception("Event handler not found.");
-            eventHandler.Invoke(this, new object[] {@event.Context});
+            var eventHandler = GetEventHandler(@event.GetType().Name) ?? throw new Exception($"Event handler not found for event { @event}");
+            eventHandler.Invoke(this, new object[] { @event.Context });
             ValidateState();
             Events.Add(@event);
         }
 
-        public MethodInfo? GetEventHandler(string eventHandler) 
+        public MethodInfo? GetEventHandler(string eventHandler)
         {
+            Console.WriteLine($"Este es el event handler {eventHandler}");
             MethodInfo? method = GetType().GetMethod($"On{eventHandler}", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             return method;
         }
