@@ -36,6 +36,7 @@ namespace SupplierCompany.Infrastructure
                             p.PolicyId,
                             p.Title,
                             p.CoverageAmount,
+                            p.CoverageDistance,
                             p.Price,
                             p.Type,
                             p.IssuanceDate,
