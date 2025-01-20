@@ -1,9 +1,9 @@
 ﻿namespace Application.Core
 {
-    public class ExceptionCatcher<T,U>(IService<T, U> service, Func<Exception, Exception> exceptionParser) : IService<T, U> 
+    public class ExceptionCatcher<T, U>(IService<T, U> service, Func<Exception, Exception> exceptionParser) : IService<T, U>
     {
         private readonly IService<T, U> _service = service;
-        private readonly Func<Exception, Exception> _exceptionParser = exceptionParser; 
+        private readonly Func<Exception, Exception> _exceptionParser = exceptionParser;
         async public Task<Result<U>> Execute(T data)
         {
             try
@@ -12,9 +12,9 @@
                 if (res.IsError) res.Unwrap();
                 return res;
             }
-            catch (Exception e) 
-            { 
-               throw _exceptionParser(e);
+            catch (Exception e)
+            {
+                throw _exceptionParser(e);
             }
         }
     }
