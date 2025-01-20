@@ -1,24 +1,27 @@
 ﻿using Application.Core;
 using MongoDB.Driver;
-using SupplierCompany.Infrastructure;
+using SupplierCompany.Application;
 
-namespace SupplierCompany.Query
+namespace SupplierCompany.Infrastructure
 {
-    public class GetAllSupplierCompanies
+    public class FindAllSupplierCompaniesQuery : IService<string, List<FindAllSupplierCompanyResponse>>
     {
         private readonly IMongoCollection<MongoSupplierCompany> _supplierCompanyCollection;
 
-        public GetAllSupplierCompanies()
+        public FindAllSupplierCompaniesQuery()
         {
             var client = new MongoClient(Environment.GetEnvironmentVariable("CONNECTION_URI"));
             var database = client.GetDatabase(Environment.GetEnvironmentVariable("DATABASE_NAME"));
             _supplierCompanyCollection = database.GetCollection<MongoSupplierCompany>("supplier-companies");
         }
 
-        public async Task<Result<List<SupplierCompanyResponse>>> Execute()
+        public async Task<Result<List<FindAllSupplierCompanyResponse>>> Execute(string param)
         {
-            var supplierCompanies = await _supplierCompanyCollection.Find(_ => true).ToListAsync();
-            var response = supplierCompanies.Select(supplierCompany =>
+            var res = await _supplierCompanyCollection.Find(_ => true).ToListAsync();
+
+            if (res == null) return Result<List<FindAllSupplierCompanyResponse>>.MakeError(new SupplierCompanyNotFoundError());
+
+            var response = res.Select(supplierCompany =>
             {
                     var departments = supplierCompany.Departments.Select(d =>
                     new DepartmentResponse(
@@ -40,7 +43,7 @@ namespace SupplierCompany.Query
                         )
                     ).ToList();
 
-                    return new SupplierCompanyResponse(
+                    return new FindAllSupplierCompanyResponse(
                         supplierCompany.SupplierCompanyId,
                         departments,
                         policies,
@@ -55,7 +58,7 @@ namespace SupplierCompany.Query
                     );
                 }).ToList();
 
-            return Result<List<SupplierCompanyResponse>>.MakeSuccess(response);
+            return Result<List<FindAllSupplierCompanyResponse>>.MakeSuccess(response);
         }
     }
 }

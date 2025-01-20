@@ -18,7 +18,7 @@
         DateTime ExpirationDate
     );
     
-    public record SupplierCompanyResponse(
+    public record FindAllSupplierCompanyResponse(
         string SupplierCompanyId,
         List<DepartmentResponse> Departments,
         List<PolicyResponse> Policies,

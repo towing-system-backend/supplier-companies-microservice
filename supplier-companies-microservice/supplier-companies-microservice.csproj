@@ -33,8 +33,4 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Src\Application\Errors\" />
-	</ItemGroup>
-
 </Project>
