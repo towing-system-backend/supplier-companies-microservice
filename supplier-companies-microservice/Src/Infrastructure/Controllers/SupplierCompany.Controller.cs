@@ -180,13 +180,20 @@ namespace SupplierCompany.Infrastructure
             return Ok(res.Unwrap());
         }
 
-        [HttpGet("find/all/suppliercompanies\n")]
+        [HttpGet("find/all/suppliercompanies")]
         [Authorize(Roles = "Admin")]
         public async Task<ObjectResult> GetAllSupplierCompanies()
         {
-            var query = new FindAllSupplierCompaniesQuery();
-  
+            var query =
+                new ExceptionCatcher<string, List<FindAllSupplierCompanyResponse>>(
+                    new PerfomanceMonitor<string, List<FindAllSupplierCompanyResponse>>(
+                        new LoggingAspect<string, List<FindAllSupplierCompanyResponse>>(
+                                new FindAllSupplierCompaniesQuery(), _logger
+                            ), _logger, _performanceLogsRepository, nameof(FindAllSupplierCompaniesQuery), "Read"
+                    ), ExceptionParser.Parse
+                );
             var res = await query.Execute("");
+
             return Ok(res.Unwrap());
         }
 
