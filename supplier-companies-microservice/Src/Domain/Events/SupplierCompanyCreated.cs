@@ -4,7 +4,7 @@ namespace SupplierCompany.Domain
 {
     public record DepartmentInfo(string Id, string Name, List<string> Employees);
     public record EmployeeInfo(string Id);
-    public record PolicyInfo(string Id, string Title, int CoverageAmount, decimal Price, string Type, DateOnly IssuanceDate, DateOnly ExpirationDate);
+    public record PolicyInfo(string Id, string Title, int CoverageAmount, int CoverageDistance, decimal Price, string Type, DateOnly IssuanceDate, DateOnly ExpirationDate);
     public class SupplierCompanyCreatedEvent(string publisherId, string type, SupplierCompanyCreated context) : DomainEvent(publisherId, type, context) { }
 
     public class SupplierCompanyCreated(
@@ -53,6 +53,7 @@ namespace SupplierCompany.Domain
                 p.GetId().GetValue(),
                 p.GetTitle().GetValue(),
                 p.GetCoverageAmount().GetValue(),
+                p.GetCoverageDistance().GetValue(),
                 p.GetPrice().GetValue(),
                 p.GetType().GetValue(),
                 p.GetIssuanceDate().GetValue(),
