@@ -4,11 +4,11 @@ namespace SupplierCompany.Domain
 {
     public class PolicyExpirationDate : IValueObject<PolicyExpirationDate>
     {
-        private readonly DateTime _value;
+        private readonly DateOnly _value;
 
-        public PolicyExpirationDate(DateTime value)
+        public PolicyExpirationDate(DateOnly value)
         {
-            if (value < DateTime.Now)
+            if (value < DateOnly.FromDateTime(DateTime.Now))
             {
                 throw new InvalidPolicyExpirationDateException();
             }
@@ -16,7 +16,7 @@ namespace SupplierCompany.Domain
             _value = value;
         }
 
-        public DateTime GetValue() => _value;
+        public DateOnly GetValue() => _value;
         public bool Equals(PolicyExpirationDate other) => _value == other._value;
     }
 }

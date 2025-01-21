@@ -10,8 +10,8 @@ namespace SupplierCompany.Infrastructure
 
         public FindAllSupplierCompaniesQuery()
         {
-            var client = new MongoClient(Environment.GetEnvironmentVariable("CONNECTION_URI_READ_MODELS"));
-            var database = client.GetDatabase(Environment.GetEnvironmentVariable("DATABASE_NAME_READ_MODELS"));
+            var client = new MongoClient(Environment.GetEnvironmentVariable("CONNECTION_URI"));
+            var database = client.GetDatabase(Environment.GetEnvironmentVariable("DATABASE_NAME"));
             _supplierCompanyCollection = database.GetCollection<MongoSupplierCompany>("supplier-companies");
         }
 
@@ -23,41 +23,41 @@ namespace SupplierCompany.Infrastructure
 
             var response = res.Select(supplierCompany =>
             {
-                    var departments = supplierCompany.Departments.Select(d =>
-                    new DepartmentResponse(
-                            d.DepartmentId,
-                            d.Name,
-                            d.Employees
-                        )
-                    ).ToList();
+                var departments = supplierCompany.Departments.Select(d =>
+                new DepartmentResponse(
+                        d.DepartmentId,
+                        d.Name,
+                        d.Employees
+                    )
+                ).ToList();
 
-                    var policies = supplierCompany.Policies.Select(p =>
-                            new PolicyResponse(
-                            p.PolicyId,
-                            p.Title,
-                            p.CoverageAmount,
-                            p.CoverageDistance,
-                            p.Price,
-                            p.Type,
-                            p.IssuanceDate,
-                            p.ExpirationDate
-                        )
-                    ).ToList();
+                var policies = supplierCompany.Policies.Select(p =>
+                        new PolicyResponse(
+                        p.PolicyId,
+                        p.Title,
+                        p.CoverageAmount,
+                        p.CoverageDistance,
+                        p.Price,
+                        p.Type,
+                        p.IssuanceDate,
+                        p.ExpirationDate
+                    )
+                ).ToList();
 
-                    return new FindAllSupplierCompanyResponse(
-                        supplierCompany.SupplierCompanyId,
-                        departments,
-                        policies,
-                        supplierCompany.TowDrivers,
-                        supplierCompany.Name,
-                        supplierCompany.PhoneNumber,
-                        supplierCompany.Type,
-                        supplierCompany.Rif,
-                        supplierCompany.State,
-                        supplierCompany.City,
-                        supplierCompany.Street
-                    );
-                }).ToList();
+                return new FindAllSupplierCompanyResponse(
+                    supplierCompany.SupplierCompanyId,
+                    departments,
+                    policies,
+                    supplierCompany.TowDrivers,
+                    supplierCompany.Name,
+                    supplierCompany.PhoneNumber,
+                    supplierCompany.Type,
+                    supplierCompany.Rif,
+                    supplierCompany.State,
+                    supplierCompany.City,
+                    supplierCompany.Street
+                );
+            }).ToList();
 
             return Result<List<FindAllSupplierCompanyResponse>>.MakeSuccess(response);
         }

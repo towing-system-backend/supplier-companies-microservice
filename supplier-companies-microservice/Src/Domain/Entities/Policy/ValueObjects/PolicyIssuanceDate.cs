@@ -4,11 +4,11 @@ namespace SupplierCompany.Domain
 {
     public class PolicyIssuanceDate : IValueObject<PolicyIssuanceDate>
     {
-        private readonly DateTime _value;
+        private readonly DateOnly _value;
 
-        public PolicyIssuanceDate(DateTime value)
+        public PolicyIssuanceDate(DateOnly value)
         {
-            if (value < DateTime.Now)
+            if (value > DateOnly.FromDateTime(DateTime.Now))
             {
                 throw new InvalidPolicyIssuanceDateException();
             }
@@ -16,7 +16,7 @@ namespace SupplierCompany.Domain
             _value = value;
         }
 
-        public DateTime GetValue() => _value;
+        public DateOnly GetValue() => _value;
         public bool Equals(PolicyIssuanceDate other) => _value == other._value;
     }
 }

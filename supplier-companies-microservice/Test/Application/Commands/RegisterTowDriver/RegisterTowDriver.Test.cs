@@ -67,8 +67,8 @@ namespace SupplierCompany.Test
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate(DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [new TowDriverId("34624b38-b69f-4872-a939-25cc9723dd5f")],
@@ -116,8 +116,8 @@ namespace SupplierCompany.Test
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate(DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [
@@ -170,8 +170,8 @@ namespace SupplierCompany.Test
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate(DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [new TowDriverId("34624b38-b69f-4872-a939-25cc9723dd5f")],

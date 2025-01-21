@@ -4,7 +4,7 @@ namespace SupplierCompany.Domain
 {
     public record DepartmentInfo(string Id, string Name, List<string> Employees);
     public record EmployeeInfo(string Id);
-    public record PolicyInfo(string Id, string Title, int CoverageAmount, decimal Price, string Type, DateTime IssuanceDate, DateTime ExpirationDate);
+    public record PolicyInfo(string Id, string Title, int CoverageAmount, decimal Price, string Type, DateOnly IssuanceDate, DateOnly ExpirationDate);
     public class SupplierCompanyCreatedEvent(string publisherId, string type, SupplierCompanyCreated context) : DomainEvent(publisherId, type, context) { }
 
     public class SupplierCompanyCreated(

@@ -13,8 +13,8 @@
         int CoverageDistance,
         decimal Price,
         string Type,
-        DateTime IssuanceDate,
-        DateTime ExpirationDate
+        DateOnly IssuanceDate,
+        DateOnly ExpirationDate
     );
 
     public record UpdateSupplierCompanyCommand(

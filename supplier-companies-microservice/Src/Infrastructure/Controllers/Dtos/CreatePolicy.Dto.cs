@@ -17,8 +17,8 @@ namespace SupplierCompany.Infrastructure
         [Required]
         string Type,
         [Required]
-        DateTime IssuanceDate,
+        DateOnly IssuanceDate,
         [Required]
-        DateTime ExpirationDate
+        DateOnly ExpirationDate
     );
 }

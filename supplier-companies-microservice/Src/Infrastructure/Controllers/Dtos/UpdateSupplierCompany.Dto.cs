@@ -26,9 +26,9 @@ namespace SupplierCompany.Infrastructure
         [Required][StringLength(20, MinimumLength = 5)]
         string Type,
         [Required]
-        DateTime IssuanceDate,
+        DateOnly IssuanceDate,
         [Required]
-        DateTime ExpirationDate
+        DateOnly ExpirationDate
     );
 
     public record UpdateSupplierCompanyDto(

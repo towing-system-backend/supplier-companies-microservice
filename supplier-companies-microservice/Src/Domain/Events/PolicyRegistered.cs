@@ -11,8 +11,8 @@ namespace SupplierCompany.Domain
         int coverageDistance,
         decimal price,
         string type,
-        DateTime issuanceDate,
-        DateTime expirationDate
+        DateOnly issuanceDate,
+        DateOnly expirationDate
     )
     {
         public readonly string PolicyId = id;
@@ -21,8 +21,8 @@ namespace SupplierCompany.Domain
         public readonly int CoverageDistance = coverageDistance;
         public readonly decimal Price = price;
         public readonly string Type = type;
-        public readonly DateTime IssuanceDate = issuanceDate;
-        public readonly DateTime ExpirationDate = expirationDate;
+        public readonly DateOnly IssuanceDate = issuanceDate;
+        public readonly DateOnly ExpirationDate = expirationDate;
         public static PolicyRegisteredEvent CreateEvent(
             SupplierCompanyId publisherId,
             PolicyId policyId,

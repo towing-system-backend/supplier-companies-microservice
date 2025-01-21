@@ -37,7 +37,7 @@ namespace SupplierCompany.Tests
                     new Application.Department("Contabilidad")
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
+                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateOnly.FromDateTime(DateTime.Now).AddDays(1), DateOnly.FromDateTime(DateTime.Now).AddDays(2))
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -66,8 +66,8 @@ namespace SupplierCompany.Tests
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate(DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [new TowDriverId("34624b38-b69f-4872-a939-25cc9723dd5f")],
@@ -104,7 +104,7 @@ namespace SupplierCompany.Tests
                     new Application.Department("Contabilidad")
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(2), DateTime.Now.AddDays(1))
+                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateOnly.FromDateTime(DateTime.Now).AddDays(2), DateOnly.FromDateTime(DateTime.Now).AddDays(1))
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -144,7 +144,7 @@ namespace SupplierCompany.Tests
                     new Application.Department("Contabilidad")
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
+                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateOnly.FromDateTime(DateTime.Now).AddDays(1), DateOnly.FromDateTime(DateTime.Now).AddDays(2))
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -185,7 +185,7 @@ namespace SupplierCompany.Tests
                     new Application.Department("Contabilidad")
                 ],
                 [
-                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2))
+                    new Application.Policy("Paramedicos", 100000, 100, 5000, "Especial", DateOnly.FromDateTime(DateTime.Now).AddDays(1), DateOnly.FromDateTime(DateTime.Now).AddDays(2))
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",

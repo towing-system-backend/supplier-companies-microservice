@@ -38,7 +38,7 @@ namespace SupplierCompany.Test
                     new DepartmentUpdate("e1d33be1-1c00-4dd8-beb4-e8c0ab9aaa64", "Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "6426e7b8-3e17-4f0c-8273-01c7cc56ecdf"]),
                 ],
                 [
-                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2)),
+                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateOnly.FromDateTime(DateTime.Now).AddDays(1), DateOnly.FromDateTime(DateTime.Now).AddDays(2)),
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -81,7 +81,7 @@ namespace SupplierCompany.Test
                     new DepartmentUpdate("e1d33be1-1c00-4dd8-beb4-e8c0ab9aaa64", "Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "5631e557-08ac-475b-bd5f-a6cccc9da98d"]),
                 ],
                 [
-                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2)),
+                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateOnly.FromDateTime(DateTime.Now).AddDays(1), DateOnly.FromDateTime(DateTime.Now).AddDays(2)),
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -112,8 +112,8 @@ namespace SupplierCompany.Test
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate(DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [new TowDriverId("34624b38-b69f-4872-a939-25cc9723dd5f")],
@@ -151,7 +151,7 @@ namespace SupplierCompany.Test
                     new DepartmentUpdate("82219df5-e4a4-4ce6-95e8-42ac0af0a2a9", "Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "6426e7b8-3e17-4f0c-8273-01c7cc56ecdf"]),
                 ],
                 [
-                    new PolicyUpdate("b68422ba-ebd0-45ea-9709-a53c64593d10", "Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(2), DateTime.Now.AddDays(1)),
+                    new PolicyUpdate("b68422ba-ebd0-45ea-9709-a53c64593d10", "Paramedicos", 100000, 100, 5000, "Especial", DateOnly.FromDateTime(DateTime.Now).AddDays(2), DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -182,8 +182,8 @@ namespace SupplierCompany.Test
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate(DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [new TowDriverId("34624b38-b69f-4872-a939-25cc9723dd5f")],
@@ -227,7 +227,7 @@ namespace SupplierCompany.Test
                     new DepartmentUpdate("e1d33be1-1c00-4dd8-beb4-e8c0ab9aaa64", "Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d", "5631e557-08ac-475b-bd5f-a6cccc9da98d"]),
                 ],
                 [
-                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2)),
+                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateOnly.FromDateTime(DateTime.Now).AddDays(1), DateOnly.FromDateTime(DateTime.Now).AddDays(2)),
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -258,8 +258,8 @@ namespace SupplierCompany.Test
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate(DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [new TowDriverId("34624b38-b69f-4872-a939-25cc9723dd5f")],
@@ -310,7 +310,7 @@ namespace SupplierCompany.Test
                     new DepartmentUpdate("e1d33be1-1c00-4dd8-beb4-e8c0ab9aaa64", "Contabilidad", ["5631e557-08ac-475b-bd5f-a6cccc9da98d"]),
                 ],
                 [
-                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2)),
+                    new PolicyUpdate("b791c9b1-a814-428c-847c-e25c92652dbf", "Paramedicos", 100000, 100, 5000, "Especial", DateOnly.FromDateTime(DateTime.Now).AddDays(1), DateOnly.FromDateTime(DateTime.Now).AddDays(2)),
                 ],
                 [
                     "dec6fb20-ee0f-4da2-a1c2-69e3b67810dd",
@@ -341,8 +341,8 @@ namespace SupplierCompany.Test
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate( DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [new TowDriverId("34624b38-b69f-4872-a939-25cc9723dd5f")],

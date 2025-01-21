@@ -39,8 +39,8 @@ namespace SupplierCompany.Test
                 100,
                 5000,
                 "Especial",
-                DateTime.Now,
-                DateTime.Now.AddYears(1)
+                DateOnly.FromDateTime(DateTime.Now),
+                DateOnly.FromDateTime(DateTime.Now).AddYears(1)
             );
 
             _supplierCompanyRepositoryMock.Setup(repo => repo.FindById(command.SupplierCompanyId))
@@ -70,8 +70,8 @@ namespace SupplierCompany.Test
                 100,
                 5000,
                 "Especial",
-                DateTime.Now,
-                DateTime.Now.AddYears(1)
+                DateOnly.FromDateTime(DateTime.Now),
+                DateOnly.FromDateTime(DateTime.Now).AddYears(1)
             );
 
             var supplierCompany = Domain.SupplierCompany.Create(
@@ -88,8 +88,8 @@ namespace SupplierCompany.Test
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate(DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [new TowDriverId("34624b38-b69f-4872-a939-25cc9723dd5f")],
@@ -129,8 +129,8 @@ namespace SupplierCompany.Test
                 100,
                 5000,
                 "Especial",
-                DateTime.Now,
-                DateTime.Now.AddDays(-1)
+                DateOnly.FromDateTime(DateTime.Now),
+                DateOnly.FromDateTime(DateTime.Now).AddDays(-1)
             );
 
             var supplierCompany = Domain.SupplierCompany.Create(
@@ -147,8 +147,8 @@ namespace SupplierCompany.Test
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate(DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [new TowDriverId("34624b38-b69f-4872-a939-25cc9723dd5f")],
@@ -187,8 +187,8 @@ namespace SupplierCompany.Test
                 100,
                 5000,
                 "Especial",
-                DateTime.Now.AddDays(1),
-                DateTime.Now.AddYears(1)
+                DateOnly.FromDateTime(DateTime.Now).AddDays(1),
+                DateOnly.FromDateTime(DateTime.Now).AddYears(1)
             );
             var supplierCompany = Domain.SupplierCompany.Create(
                 new SupplierCompanyId("0ed13c45-93cf-4ef6-ba11-b386bb36bd1b"),
@@ -204,8 +204,8 @@ namespace SupplierCompany.Test
                         new PolicyCoverageDistance(100),
                         new PolicyPrice(5000),
                         new PolicyType("Especial"),
-                        new PolicyIssuanceDate(DateTime.Now.AddDays(1)),
-                        new PolicyExpirationDate(DateTime.Now.AddYears(1))
+                        new PolicyIssuanceDate(DateOnly.FromDateTime(DateTime.Now).AddDays(1)),
+                        new PolicyExpirationDate(DateOnly.FromDateTime(DateTime.Now).AddYears(1))
                     )
                 ],
                 [new TowDriverId("34624b38-b69f-4872-a939-25cc9723dd5f")],
