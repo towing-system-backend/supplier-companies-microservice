@@ -163,7 +163,7 @@ namespace SupplierCompany.Domain
         {
             _departments = context.Departments.Select(d => 
                 new Department(
-                    new DepartmentId(d.Id),
+                    new DepartmentId(d.DepartmentId),
                     new DepartmentName(d.Name),
                     d.Employees.Select(e => new UserId(e)).ToList()
                 )
