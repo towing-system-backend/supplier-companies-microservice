@@ -15,7 +15,7 @@ namespace SupplierCompany.Domain
         DateOnly expirationDate
     )
     {
-        public readonly string PolicyId = id;
+        public readonly string Id = id;
         public readonly string Title = title;
         public readonly int CoverageAmount = coverageAmount;
         public readonly int CoverageDistance = coverageDistance;

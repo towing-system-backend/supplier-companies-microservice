@@ -205,7 +205,7 @@ namespace SupplierCompany.Domain
         {
             _policies.Add(
                 new Policy(
-                    new PolicyId(context.PolicyId),
+                    new PolicyId(context.Id),
                     new PolicyTitle(context.Title),
                     new PolicyCoverageAmount(context.CoverageAmount),
                     new PolicyCoverageDistance(context.CoverageDistance),
